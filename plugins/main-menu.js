@@ -48,7 +48,7 @@ let tags = {
 const defaultMenu = {
   before:  `*─ׄ─ׅ─⭒─ׄ─ׄ─⭒─ׅ─ׄ─⭒─ׄ─ׄ─⭒─ׄ─ׄ─*
   
-Hola *%name* soy *Onyx*
+Hola *%name* soy *FN*
 
 ╔══════ •『 𝑪𝑹𝑬𝑨𝑫𝑶𝑹 』
 ║  🖥️ Ricardo 
@@ -59,7 +59,7 @@ Hola *%name* soy *Onyx*
 ║  ⚡ Nivel: %level
 ╚═════ ♢.✰.♢ ═══════
 ╔══════ •『 𝑰𝑵𝑭𝑶-𝑼𝑺𝑬𝑹』
-║  🤖 Bot: OnyxBot-MD
+║  🤖 Bot: FnBot-MD
 ║  💎 Modo Público
 ║  💨 Baileys: Multi Device
 ║  🪄 Tiempo Activo: %muptime
@@ -180,9 +180,9 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
-    await m.react('⭐')
+    await m.react('⚘')
     // onyx
-    let menuImg = 'https://i.ibb.co/CPVcnqH/file.jpg'
+    let menuImg = 'https://n.uguu.se/tdZvJaVR.jpg'
     await conn.sendFile(m.chat, menuImg, 'menu.jpg', text.trim(), m)
 
   } catch (e) {
