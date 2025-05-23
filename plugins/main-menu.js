@@ -182,7 +182,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
 
     await m.react('⚘')
     // onyx
-    let menuImg = 'https://n.uguu.se/tdZvJaVR.jpg'
+    let menuImg = 'https://files.catbox.moe/b96pce.jpg'
     await conn.sendFile(m.chat, menuImg, 'menu.jpg', text.trim(), m)
 
   } catch (e) {
