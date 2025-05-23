@@ -48,10 +48,10 @@ let tags = {
 const defaultMenu = {
   before:  `*─ׄ─ׅ─⭒─ׄ─ׄ─⭒─ׅ─ׄ─⭒─ׄ─ׄ─⭒─ׄ─ׄ─*
   
-Hola *%name* soy *Barboza*
+Hola *%name* soy *Onyx*
 
 ╔══════ •『 𝑪𝑹𝑬𝑨𝑫𝑶𝑹 』
-║  🖥️ Barboza
+║  🖥️ Ricardo 
 ╚═════ ♢.✰.♢ ══════
 ╔══════ •『 𝑰𝑵𝑭𝑶-𝑩𝑶𝑻 』
 ║  👤 Cliente: %name
@@ -59,7 +59,7 @@ Hola *%name* soy *Barboza*
 ║  ⚡ Nivel: %level
 ╚═════ ♢.✰.♢ ═══════
 ╔══════ •『 𝑰𝑵𝑭𝑶-𝑼𝑺𝑬𝑹』
-║  🤖 Bot: ©Bot-Barboza-Ai®
+║  🤖 Bot: OnyxBot-MD
 ║  💎 Modo Público
 ║  💨 Baileys: Multi Device
 ║  🪄 Tiempo Activo: %muptime
