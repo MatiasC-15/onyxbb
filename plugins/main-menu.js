@@ -1,14 +1,26 @@
 import { promises } from 'fs'
 import { join } from 'path'
 import { xpRange } from '../lib/levelling.js'
+
 let Styles = (text, style = 1) => {
   var xStr = 'abcdefghijklmnopqrstuvwxyz1234567890'.split('');
   var yStr = Object.freeze({
-    1: 'ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟ(x => x.original == v);
+    1: 'ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘqʀꜱᴛᴜᴠᴡxʏᴢ1234567890'
+  });
+  var replacer = [];
+  xStr.map((v, i) => replacer.push({
+    original: v,
+    convert: yStr[style].split('')[i]
+  }));
+  var str = text.toLowerCase().split('');
+  var output = [];
+  str.map(v => {
+    const find = replacer.find(x => x.original == v);
     find ? output.push(find.convert) : output.push(v);
   });
   return output.join('');
 };
+
 let tags = {
   'anime': '🧧 _ANIME_ 🎐',
   'main': '❗ _INFO_ ❕',
@@ -169,8 +181,9 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
     await m.react('⭐')
-    // Solo texto plano, sin imágenes ni canales:
-    await conn.reply(m.chat, text.trim(), m)
+    // onyx
+    let menuImg = 'https://i.ibb.co/CPVcnqH/file.jpg'
+    await conn.sendFile(m.chat, menuImg, 'menu.jpg', text.trim(), m)
 
   } catch (e) {
     conn.reply(m.chat, '❎ Lo sentimos, el menú tiene un error.', m)
