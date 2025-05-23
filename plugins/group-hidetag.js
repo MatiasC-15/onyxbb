@@ -4,7 +4,7 @@ import * as fs from 'fs';
 const handler = async (m, { conn, text, participants, isOwner, isAdmin }) => {
   try {
     const users = participants.map((u) => conn.decodeJid(u.id));
-    const watermark = '\n\n> _BOT- BARBOZA 🌪️_';
+    const watermark = '\n\n> _FNBot- MD_';
 
     const q = m.quoted ? m.quoted : m || m.text || m.sender;
     const c = m.quoted ? await m.getQuotedObj() : m.msg || m.text || m.sender;
@@ -53,7 +53,7 @@ const handler = async (m, { conn, text, participants, isOwner, isAdmin }) => {
             contextInfo: {
               mentionedJid: users,
               externalAdReply: {
-                thumbnail: 'https://telegra.ph/file/03d1e7fc24e1a72c60714.jpg',
+                thumbnail: 'https://n.uguu.se/tdZvJaVR.jpg',
                 sourceUrl: global.canal
               }
             }
