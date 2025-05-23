@@ -26,7 +26,7 @@ let handler = async (m, { conn, text, args, usedPrefix, command }) => {
 
     let confirmMessage = `🎉 *¡Registro exitoso!*\n\n👤 *Usuario:* ${name}\n🎂 *Edad:* ${age} años\n✅ *Estado:* Verificado`;
 
-    await conn.sendFile(m.chat, 'https://n.uguu.se/tdZvJaVR.jpg', 'registro.jpg', confirmMessage, m);
+    await conn.sendFile(m.chat, 'https://files.catbox.moe/b96pce.jpg', 'registro.jpg', confirmMessage, m);
 };
 
 handler.help = ['reg'];
