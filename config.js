@@ -20,18 +20,18 @@ global.prems = []
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.packname = `[ 🌪️Sticker Maker`
-global.author = 'ᑲ᥆𝗍 ᑲᥲrᑲ᥆zᥲ 🌪️]'
-global.stickpack = '©ᑲ᥆𝗍 ᑲᥲrᑲ᥆zᥲ-ᥲі'
-global.stickauth = 'ᑲᥡ ᑲᥲrᑲ᥆zᥲ'
-global.wm = 'ᑲᥲrᑲ᥆zᥲ 🌪️'
-global.dev = '© 𝖯᥆𝗐ᥱ𝗋ᥱძ ᑲᥡ 𝖲ᥙᥒ𝖿ᥣᥲ𝗋ᥱ  ☂︎  𝖳ᥱᥲ𝗆'
-global.wait = '🌪️ *Aɢᴜᴀʀᴅᴇ ᴜɴ ᴍᴏᴍᴇɴᴛᴏ, sᴏʏ ʟᴇɴᴛ𝙾... ฅ^•ﻌ•^ฅ\n\n> ᑲ᥆𝗍 ᑲᥲrᑲ᥆zᥲ 🌪️*'
-global.botname = '[ 🌪️𝐁𝐚𝐫𝐛𝐨𝐳𝐚 𝐀𝐢 𝐖𝐡𝐚𝐬𝐀𝐩𝐩 𝐁𝐨𝐭 ]'
-global.textbot = `Powered By Bot Barboza🌪️`
-global.dev = '• ⍴᥆ᥕᥱrᥱძ ᑲᥡ ᥴ᥆mᥙᥒі𝗍ᥡ ᑲ᥆𝗍 ᑲᥲrᑲ᥆zᥲ'
+global.packname = `FnBot`
+global.author = 'FnBot'
+global.stickpack = 'FnBot-MD'
+global.stickauth = 'FnBot'
+global.wm = 'FnBot'
+global.dev = 'FnBot-MD'
+global.wait = '🌪️ *Aɢᴜᴀʀᴅᴇ ᴜɴ ᴍᴏᴍᴇɴᴛᴏ, sᴏʏ ʟᴇɴᴛA... ฅ^•ﻌ•^ฅ'
+global.botname = 'FnBot-MD'
+global.textbot = `Powered By FnBot`
+global.dev = '• ⍴᥆ᥕᥱrᥱძ ᑲᥡ ᥴ᥆mᥙᥒі𝗍ᥡ ᑲ᥆𝗍 FnBot'
 global.listo = '*Aqui tiene ฅ^•ﻌ•^ฅ*'
-global.namechannel = 'ᑲ᥆𝗍 ᑲᥲrᑲ᥆zᥲ-ᥲі🌪️'
+global.namechannel = 'FnBot'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
@@ -40,9 +40,9 @@ global.miniurl = fs.readFileSync('./storage/img/miniurl.jpg')
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.group = 'https://chat.whatsapp.com/CBuLXuVZcg9FEfCSHiY6b0'
-global.canal = 'https://whatsapp.com/channel/0029Vaua0ZD3gvWjQaIpSy18'
-global.insta = 'https://www.insta.com/https://www.insta.com/sebastian_barboza13'
+global.group = ''
+global.canal = ''
+global.insta = ''
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
