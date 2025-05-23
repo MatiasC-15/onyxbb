@@ -9,7 +9,7 @@ let handler = async (m, { conn, text, args, usedPrefix, command }) => {
     }
 
     if (!regFormat.test(text)) {
-        return m.reply(`❌ Formato incorrecto.\n\nUsa el comando así: *${usedPrefix + command} nombre.edad*\nEjemplo: *${usedPrefix + command} Barboza.18*`);
+        return m.reply(`❌ Formato incorrecto.\n\nUsa el comando así: *${usedPrefix + command} nombre.edad*\nEjemplo: *${usedPrefix + command} FnBot.18*`);
     }
 
     let [_, name, splitter, age] = text.match(regFormat);
