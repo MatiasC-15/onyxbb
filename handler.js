@@ -1,4 +1,3 @@
-
 import { smsg } from './lib/simple.js'
 import { format } from 'util'
 import { fileURLToPath } from 'url'
@@ -245,7 +244,7 @@ const isAllowed = allowedBots.includes(this.user.jid)
 /*const gruposLimitados = ['120363400282268465@g.us','120363418071387498@g.us'];
 const comandosPermitidos = ['serbot', 'bots', 'kick', 'code', 'delsession', 'tutosub', 'on', 'n'];*/
 
-if (gruposLimitados.includes(m.chat) && !comandosPermitidos.includes(command)) continue;
+/*if (gruposLimitados.includes(m.chat) && !comandosPermitidos.includes(command)) continue;*/
 
             let fail = plugin.fail || global.dfail
             let isAccept = plugin.command instanceof RegExp ?
