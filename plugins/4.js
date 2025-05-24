@@ -1,20 +1,18 @@
-const initHandler = async (m, { conn, usedPrefix }) => {
-    const buttons = [
-        { buttonId: `${usedPrefix}.owner`, buttonText: { displayText: "👑 Owner" }, type: 1 },
-        { buttonId: `${usedPrefix}.ping`, buttonText: { displayText: "🏓 Ping" }, type: 1 },
-    ]
-
+const handler = async (m, { conn, usedPrefix }) => {
     await conn.sendMessage(
         m.chat,
         {
-            text: "🔹 Selecciona una opción:",
-            buttons,
-            headerType: 1 // Importante para que los botones funcionen
+            text: '🔹 Selecciona una opción:',
+            buttons: [
+                {buttonId: `${usedPrefix}owner`, buttonText: {displayText: "👑 Owner"}, type: 1},
+                {buttonId: `${usedPrefix}ping`, buttonText: {displayText: "🏓 Ping"}, type: 1}
+            ],
+            headerType: 1 // Necesario para botones
         },
         { quoted: m }
     )
 }
 
-initHandler.command = /^init$/i
+handler.command = /^init$/i
 
-export default initHandler
+export default handler
