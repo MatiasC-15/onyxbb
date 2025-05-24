@@ -5,7 +5,7 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
     try {
         if (!args[0]) {
             return conn.reply(m.chat, 
-                `> 𝘗𝘰𝘳 𝘧𝘢𝘷𝘰𝘳 𝘪𝘯𝘨𝘳𝘦𝘴𝘢 𝘦𝘭 𝘵𝘦𝘹𝘵𝘰 𝘲𝘶𝘦 𝘥𝘦𝘴𝘦𝘢𝘴 𝘤𝘰𝘯𝘷𝘦𝘳𝘵𝘪𝘳 𝘦𝘯 𝘴𝘵𝘪𝘤𝘬𝘦𝘳.\n\n𝘌𝘫𝘦𝘮𝘱𝘭𝘰: ${usedPrefix}brat 𝘩𝘰𝘭𝘢 𝘣𝘰𝘭𝘢.`, 
+                `𝘗𝘰𝘳 𝘧𝘢𝘷𝘰𝘳 𝘪𝘯𝘨𝘳𝘦𝘴𝘢 𝘦𝘭 𝘵𝘦𝘹𝘵𝘰 𝘲𝘶𝘦 𝘥𝘦𝘴𝘦𝘢𝘴 𝘤𝘰𝘯𝘷𝘦𝘳𝘵𝘪𝘳 𝘦𝘯 𝘴𝘵𝘪𝘤𝘬𝘦𝘳.\n\n𝘌𝘫𝘦𝘮𝘱𝘭𝘰: ${usedPrefix}brat 𝘩𝘰𝘭𝘢 𝘣𝘰𝘭𝘢.`, 
                 m);
         }
 
