@@ -1,19 +1,70 @@
-const handler = async (m, { conn, usedPrefix }) => {
-  // Mensaje principal
-  let texto = '🔹 Selecciona una opción:'
-  // Puedes poner una url de imagen, o null si no quieres imagen
-  let thumbnail = null // o 'https://files.catbox.moe/b96pce.jpg'
+const estilosLogos = [
+  { cmd: "glitchtext",      emoji: "🟣" },
+  { cmd: "narutotext",     emoji: "🍥" },
+  { cmd: "dragonball",     emoji: "🟠" },
+  { cmd: "neonlight",      emoji: "💡" },
+  { cmd: "pubglogo",       emoji: "🔫" },
+  { cmd: "harrypotter",    emoji: "⚡" },
+  { cmd: "marvel",         emoji: "🦸" },
+  { cmd: "pixelglitch",    emoji: "🔳" },
+  { cmd: "amongustext",    emoji: "👾" },
+  { cmd: "writetext",      emoji: "✍️" },
+  { cmd: "advancedglow",   emoji: "🌟" },
+  { cmd: "typographytext", emoji: "📝" },
+  { cmd: "neonglitch",     emoji: "🌈" },
+  { cmd: "flagtext",       emoji: "🏳️" },
+  { cmd: "flag3dtext",     emoji: "🏁" },
+  { cmd: "deletingtext",   emoji: "❌" },
+  { cmd: "blackpinkstyle", emoji: "💖" },
+  { cmd: "glowingtext",    emoji: "✨" },
+  { cmd: "underwatertext", emoji: "🌊" },
+  { cmd: "logomaker",      emoji: "🖌️" },
+  { cmd: "cartoonstyle",   emoji: "🎨" },
+  { cmd: "papercutstyle",  emoji: "✂️" },
+  { cmd: "watercolortext", emoji: "🖍️" },
+  { cmd: "effectclouds",   emoji: "☁️" },
+  { cmd: "blackpinklogo",  emoji: "🌸" },
+  { cmd: "gradienttext",   emoji: "🌀" },
+  { cmd: "summerbeach",    emoji: "🏖️" },
+  { cmd: "luxurygold",     emoji: "🥇" },
+  { cmd: "multicoloredneon", emoji: "💫" },
+  { cmd: "sandsummer",     emoji: "🏝️" },
+  { cmd: "galaxywallpaper", emoji: "🪐" },
+  { cmd: "style",          emoji: "💠" },
+  { cmd: "makingneon",     emoji: "🔆" },
+  { cmd: "royaltext",      emoji: "👑" },
+  { cmd: "freecreate",     emoji: "🆓" },
+  { cmd: "galaxystyle",    emoji: "🌌" },
+  { cmd: "rainytext",      emoji: "🌧️" },
+  { cmd: "graffititext",   emoji: "🖍️" },
+  { cmd: "colorfulltext",  emoji: "🌈" },
+  { cmd: "equalizertext",  emoji: "🎚️" },
+  { cmd: "angeltxt",       emoji: "👼" },
+  { cmd: "starlight",      emoji: "🌟" },
+  { cmd: "steel",          emoji: "🔩" },
+  { cmd: "neoncity",       emoji: "🌃" },
+  { cmd: "cloudsky",       emoji: "☁️" },
+  { cmd: "matrix",         emoji: "🟩" },
+  { cmd: "minion",         emoji: "💛" },
+  { cmd: "papercut3d",     emoji: "📐" },
+  { cmd: "firetext",       emoji: "🔥" },
+  { cmd: "icecold",        emoji: "🧊" },
+  { cmd: "rainbowtext",    emoji: "🌈" }
+];
 
-  // Botones
-  const botones = [
-    ['👑 Owner', `${usedPrefix}owner`],
-    ['🏓 Ping', `${usedPrefix}ping`]
-  ]
+// Handler para el menú de logos
+const menuLogosHandler = async (m, { conn, usedPrefix }) => {
+  let menuText = `*┏━━⊱  MENÚ DE LOGOS Y ESTILOS  ⊰━━┓*\n\n`;
 
-  // Enviar los botones usando sendButton
-  await conn.sendButton(m.chat, texto, 'Bot Barboza', thumbnail, botones, m)
-}
+  menuText += estilosLogos.map(e => `${e.emoji} *${usedPrefix}${e.cmd}*`).join('\n');
+  menuText += `\n\n*┗━━⊱ Usa así:* _${usedPrefix}comando tu texto_\nPor ejemplo: *${usedPrefix}glitchtext Rayo-ofc*`;
 
-handler.command = /^init$/i
+  await conn.reply(m.chat, menuText, m);
+};
 
-export default handler
+// Para bots de WhatsApp tipo Baileys o similar:
+menuLogosHandler.help = ['menulogos'];
+menuLogosHandler.tags = ['menu'];
+menuLogosHandler.command = ['menulogos', 'logosmenu', 'logostylemenu'];
+
+export default menuLogosHandler;
