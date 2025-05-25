@@ -7,35 +7,27 @@ const handler = async (m, { conn }) => {
   try {
     let q = m.quoted ? m.quoted : m
     let mime = q.mimetype || q.mediaType || ''
-    if (!/webp|image|video/g.test(mime)) return m.reply('💫 Responde a una imagen para convertirla en sticker.')
+    if (!/webp|image|video/g.test(mime)) return m.reply('💫 Responde a una imagen o video para convertirlo en sticker.')
     let media = await q.download?.()
     if (!media) return m.reply('⚡ No se pudo descargar el archivo.')
     if (/video/g.test(mime) && q.seconds > 8) return m.reply('☁️ ¡El video no puede durar más de 8 segundos!')
-    let stickerFile = await processSticker(media, mime)
-    return sendSticker(m, conn, stickerFile)
+    let stickerBuffer
+    if (/webp/g.test(mime)) {
+      stickerBuffer = await webp2png(media)
+    } else if (/image/g.test(mime)) {
+      stickerBuffer = await sticker(media, false, '', '') // Si tu función acepta más argumentos, ajústalo
+    } else if (/video/g.test(mime)) {
+      stickerBuffer = await sticker(media, true, '', '') // true para video
+    }
+    if (!stickerBuffer) return m.reply('❌ No se pudo crear el sticker.')
+    await conn.sendMessage(m.chat, { sticker: stickerBuffer }, { quoted: m })
   } catch (e) {
     console.error(e)
     return m.reply('❌ Ocurrió un error al generar el sticker.')
   }
 }
 
-const processSticker = async (media, mime) => {
-  if (/webp/g.test(mime)) return await webp2png(media)
-  if (/image/g.test(mime)) return await uploadImage(media)
-  if (/video/g.test(mime)) return await uploadFile(media)
-  return await uploadImage(media)
-}
-
-const sendSticker = (m, conn, stickerFile) => {
-  conn.sendFile(m.chat, stickerFile, 'sticker.webp', '', m, true, {
-    contextInfo: {
-      forwardingScore: 200,
-      isForwarded: false
-    }
-  }, { quoted: m })
-}
-
-handler.help = ['sticker (responde a una imagen)']
+handler.help = ['sticker (responde a una imagen o video)']
 handler.tags = ['herramientas']
 handler.command = ['s', 'sticker', 'stiker']
 
