@@ -6,7 +6,7 @@ const handler = async (m, { conn }) => {
     const q = m.quoted || m;
     const mime = (q.msg || q).mimetype || q.mediaType || "";
     if (!mime.startsWith("image/")) {
-      return conn.reply(m.chat, "> 𝘙𝘦𝘴𝘱𝘰𝘯𝘥𝘦 𝘢 𝘶𝘯𝘢 𝘪𝘮𝘢𝘨𝘦𝘯 𝘱𝘢𝘳𝘢 𝘵𝘳𝘢𝘯𝘴𝘧𝘰𝘳𝘮𝘢𝘳𝘭𝘢 𝘦𝘯 𝘏𝘋.", m,rcanal);
+      return conn.reply(m.chat, "𝘙𝘦𝘴𝘱𝘰𝘯𝘥𝘦 𝘢 𝘶𝘯𝘢 𝘪𝘮𝘢𝘨𝘦𝘯 𝘱𝘢𝘳𝘢 𝘵𝘳𝘢𝘯𝘴𝘧𝘰𝘳𝘮𝘢𝘳𝘭𝘢 𝘦𝘯 𝘏𝘋.", m);
     }
 
     await m.react("🕓");
@@ -18,14 +18,14 @@ const handler = async (m, { conn }) => {
       m.chat,
       upscaledBuffer,
       "upscaled.jpg",
-      "> 𝘈𝘲𝘶í 𝘵𝘪𝘦𝘯𝘦 𝘴𝘶 𝘪𝘮𝘢𝘨𝘦𝘯.",
+      "𝘈𝘲𝘶í 𝘵𝘪𝘦𝘯𝘦 𝘴𝘶 𝘪𝘮𝘢𝘨𝘦𝘯.",
       m,rcanal
     );
     await m.react("✅");
   } catch (e) {
     console.error("Error:", e);
     await m.react("✖️");
-    conn.reply(m.chat, "> Ocurrió un error al mejorar la imagen.", m,rcanal);
+    conn.reply(m.chat, "Ocurrió un error al mejorar la imagen.", m);
   }
 };
 
