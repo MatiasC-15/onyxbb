@@ -55,7 +55,6 @@ const modelos = {
     icecold: 'https://en.ephoto360.com/create-ice-cold-text-effect-online-870.html',
     rainbowtext: 'https://en.ephoto360.com/create-rainbow-shine-text-effect-online-874.html',
     sandwriting: 'https://en.ephoto360.com/write-in-wet-sand-text-effect-online-878.html'
-    // Puedes seguir agregando más efectos aquí, solo copia la URL del efecto de https://en.ephoto360.com/
 };
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
