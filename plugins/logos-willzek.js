@@ -1,62 +1,128 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
+import FormData from 'form-data';
+import cheerio from 'cheerio';
 
-const logos = {
-  logocorazon: 'corazon',
-  logochristmas: 'christmas',
-  logopareja: 'pareja',
-  logoglitch: 'glitch',
-  logosad: 'sad',
-  logogaming: 'gaming',
-  logosolitario: 'solitario',
-  logodragonball: 'dragonball',
-  logoneon: 'neon',
-  logogatito: 'gatito',
-  logochicagamer: 'chicagamer',
-  logonaruto: 'naruto',
-  logofuturista: 'futurista',
-  logonube: 'nube',
-  logoangel: 'angel',
-  logocielo: 'cielo',
-  logograffiti3d: 'graffiti3d',
-  logomatrix: 'matrix',
-  logohorror: 'horror',
-  logoalas: 'alas',
-  logoarmy: 'army',
-  logopubg: 'pubg',
-  logopubgfem: 'pubgfem',
-  logolol: 'lol',
-  logoamongus: 'amongus',
-  logovideopubg: 'videopubg',
-  logovideotiger: 'videotiger',
-  logovideointro: 'videointro',
-  logovideogaming: 'videogaming',
-  logoguerrero: 'guerrero',
-  logoportadaplayer: 'portadaplayer',
-  logoportadaff: 'portadaff',
-  logoportadapubg: 'portadapubg',
-  logoportadacounter: 'portadacounter'
-  // Agrega más si lo deseas
+const handler = async (m, { conn, text, usedPrefix, command }) => {
+    if (!text) {
+        return conn.reply(m.chat, `*💫 Ingresa un texto* *• Ejemplo :* ${usedPrefix + command} *FnBot-MD*`, m);
+    }
+
+    m.reply("Creando su Logo, por favor espere...");
+
+    const modelos = {
+        glitchtext: 'https://en.ephoto360.com/create-digital-glitch-text-effects-online-767.html',
+        writetext: 'https://en.ephoto360.com/write-text-on-wet-glass-online-589.html',
+        advancedglow: 'https://en.ephoto360.com/advanced-glow-effects-74.html',
+        typographytext: 'https://en.ephoto360.com/create-typography-text-effect-on-pavement-online-774.html',
+        pixelglitch: 'https://en.ephoto360.com/create-pixel-glitch-text-effect-online-769.html',
+        neonglitch: 'https://en.ephoto360.com/create-impressive-neon-glitch-text-effects-online-768.html',
+        flagtext: 'https://en.ephoto360.com/nigeria-3d-flag-text-effect-online-free-753.html',
+        flag3dtext: 'https://en.ephoto360.com/free-online-american-flag-3d-text-effect-generator-725.html',
+        deletingtext: 'https://en.ephoto360.com/create-eraser-deleting-text-effect-online-717.html',
+        blackpinkstyle: 'https://en.ephoto360.com/online-blackpink-style-logo-maker-effect-711.html',
+        glowingtext: 'https://en.ephoto360.com/create-glowing-text-effects-online-706.html',
+        underwatertext: 'https://en.ephoto360.com/3d-underwater-text-effect-online-682.html',
+        logomaker: 'https://en.ephoto360.com/free-bear-logo-maker-online-673.html',
+        cartoonstyle: 'https://en.ephoto360.com/create-a-cartoon-style-graffiti-text-effect-online-668.html',
+        papercutstyle: 'https://en.ephoto360.com/multicolor-3d-paper-cut-style-text-effect-658.html',
+        watercolortext: 'https://en.ephoto360.com/create-a-watercolor-text-effect-online-655.html',
+        effectclouds: 'https://en.ephoto360.com/write-text-effect-clouds-in-the-sky-online-619.html',
+        blackpinklogo: 'https://en.ephoto360.com/create-blackpink-logo-online-free-607.html',
+        gradienttext: 'https://en.ephoto360.com/create-3d-gradient-text-effect-online-600.html',
+        summerbeach: 'https://en.ephoto360.com/write-in-sand-summer-beach-online-free-595.html',
+        luxurygold: 'https://en.ephoto360.com/create-a-luxury-gold-text-effect-online-594.html',
+        multicoloredneon: 'https://en.ephoto360.com/create-multicolored-neon-light-signatures-591.html',
+        sandsummer: 'https://en.ephoto360.com/write-in-sand-summer-beach-online-576.html',
+        galaxywallpaper: 'https://en.ephoto360.com/create-galaxy-wallpaper-mobile-online-528.html',
+        style: 'https://en.ephoto360.com/1917-style-text-effect-523.html',
+        makingneon: 'https://en.ephoto360.com/making-neon-light-text-effect-with-galaxy-style-521.html',
+        royaltext: 'https://en.ephoto360.com/royal-text-effect-online-free-471.html',
+        freecreate: 'https://en.ephoto360.com/free-create-a-3d-hologram-text-effect-441.html',
+        galaxystyle: 'https://en.ephoto360.com/create-galaxy-style-free-name-logo-438.html',
+        amongustext: 'https://en.ephoto360.com/create-a-cover-image-for-the-game-among-us-online-762.html',
+        rainytext: 'https://en.ephoto360.com/foggy-rainy-text-effect-75.html',
+        graffititext: 'https://en.ephoto360.com/graffiti-color-199.html',
+        colorfulltext: 'https://en.ephoto360.com/create-colorful-neon-light-text-effects-online-797.html',
+        equalizertext: 'https://en.ephoto360.com/music-equalizer-text-effect-259.html',
+        narutotext: 'https://en.ephoto360.com/naruto-shippuden-logo-style-text-effect-online-808.html',
+        angeltxt: 'https://en.ephoto360.com/angel-wing-effect-329.html',
+        starlight: 'https://en.ephoto360.com/stars-night-online-1-85.html',
+        // Más estilos extra populares:
+        dragonball: 'https://en.ephoto360.com/create-dragon-ball-style-text-effects-online-809.html',
+        neonlight: 'https://en.ephoto360.com/neon-light-text-effect-online-882.html',
+        pubglogo: 'https://en.ephoto360.com/pubg-logo-maker-cute-character-online-617.html',
+        minion: 'https://en.ephoto360.com/create-minions-text-effect-online-858.html',
+        harrypotter: 'https://en.ephoto360.com/create-harry-potter-text-effect-online-853.html',
+        marvel: 'https://en.ephoto360.com/create-marvel-studios-logo-style-text-effect-online-710.html',
+        steel: 'https://en.ephoto360.com/steel-text-effect-online-843.html',
+        neoncity: 'https://en.ephoto360.com/neon-city-text-effect-online-803.html',
+        cloudsky: 'https://en.ephoto360.com/create-a-cloud-text-effect-in-the-sky-618.html',
+        matrix: 'https://en.ephoto360.com/matrix-text-effect-154.html',
+        // ¡Agrega aún más si lo deseas!
+    };
+
+    const modelo = modelos[command.toLowerCase()];
+    if (!modelo) {
+        return m.reply(`Modelo de texto no encontrado: *${command}*`);
+    }
+
+    try {
+        const data = await ephoto(modelo, text);
+        await conn.sendMessage(m.chat, { image: { url: data } }, { quoted: m });
+    } catch (e) {
+        await m.reply('❌ Error generando el logo. Intenta de nuevo más tarde.');
+    }
 };
 
-const handler = async (m, { conn, args, command }) => {
-  if (!args[0]) return m.reply('⚠️ Ingresa un texto para el logo.');
-  let text = args.join(' ').split('|')[0];
-  let cmd = command.toLowerCase();
-  if (!logos[cmd]) return m.reply('⚠️ Comando de logo no válido.');
+async function ephoto(url, text) {
+    // 1. GET para obtener los tokens
+    const initialResponse = await axios.get(url, {
+        headers: {
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0 Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+        }
+    });
+    const $ = cheerio.load(initialResponse.data);
+    const token = $('input[name=token]').val();
+    const buildServer = $('input[name=build_server]').val();
+    const buildServerId = $('input[name=build_server_id]').val();
 
-  try {
-    await m.reply('⏳ Generando logo, por favor espera...');
-    let res = await fetch(`https://carisys.online/api/logos/${logos[cmd]}?texto=${encodeURIComponent(text)}`);
-    if (!res.ok) throw 'No se pudo conectar a la API';
-    let json = await res.json();
-    if (!json.url) throw 'No se generó imagen, intenta con otro texto.';
-    await conn.sendFile(m.chat, json.url, 'logo.jpg', '', m);
-  } catch (e) {
-    await m.reply('❌ Error generando el logo. Intenta más tarde.\n' + (e && e.message ? e.message : e));
-  }
-};
+    // 2. POST form-data para procesar el texto
+    const formData = new FormData();
+    formData.append('text[]', text);
+    formData.append('token', token);
+    formData.append('build_server', buildServer);
+    formData.append('build_server_id', buildServerId);
 
-handler.help = Object.keys(logos);
-handler.tags = ['fun'];
-handler.command = new RegExp('^(' + Object.keys(logos).join('|') + ')$', 'i');
+    const postResponse = await axios({
+        url: url,
+        method: 'POST',
+        data: formData,
+        headers: {
+            'Accept': '*/*',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0 Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
+            'cookie': initialResponse.headers['set-cookie']?.join(' '),
+            ...formData.getHeaders()
+        }
+    });
+
+    // 3. POST para obtener la imagen final
+    const $$ = cheerio.load(postResponse.data);
+    const formValueInput = JSON.parse($$('input[name=form_value_input]').val());
+    formValueInput['text[]'] = formValueInput.text;
+    delete formValueInput.text;
+
+    const finalResponse = await axios.post('https://en.ephoto360.com/effect/create-image', new URLSearchParams(formValueInput), {
+        headers: {
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0 Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
+            'cookie': initialResponse.headers['set-cookie'].join(' ')
+        }
+    });
+
+    return buildServer + finalResponse.data.image;
+}
+
+handler.help = Object.keys(modelos);
+handler.tags = ['ephoto'];
+handler.command = handler.help;
+
 export default handler;
