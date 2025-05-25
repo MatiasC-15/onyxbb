@@ -52,19 +52,17 @@ const estilosLogos = [
   { cmd: "rainbowtext",    emoji: "🌈" }
 ];
 
-// Handler para el menú de logos
 const menuLogosHandler = async (m, { conn, usedPrefix }) => {
-  let menuText = `*┏━━⊱  MENÚ DE LOGOS Y ESTILOS  ⊰━━┓*\n\n`;
+  let menuText = `*MENÚ DE LOGOS Y ESTILOS*\n\n`;
 
   menuText += estilosLogos.map(e => `${e.emoji} *${usedPrefix}${e.cmd}*`).join('\n');
-  menuText += `\n\n*┗━━⊱ Usa así:* _${usedPrefix}comando tu texto_\nPor ejemplo: *${usedPrefix}glitchtext Rayo-ofc*`;
+  menuText += `\n\n*┗━━⊱ Usa así:* _${usedPrefix}comando tu texto_\nPor ejemplo: *${usedPrefix}glitchtext FnBot-MD*`;
 
   await conn.reply(m.chat, menuText, m);
 };
 
-// Para bots de WhatsApp tipo Baileys o similar:
-menuLogosHandler.help = ['menulogos'];
-menuLogosHandler.tags = ['menu'];
-menuLogosHandler.command = ['menulogos', 'logosmenu', 'logostylemenu'];
+handler.help = ['menulogos'];
+handler.tags = ['menu'];
+handler.command = ['menulogos', 'logosmenu', 'logostylemenu'];
 
 export default menuLogosHandler;
