@@ -30,7 +30,7 @@ var handler = async function (m, conn, db) {
 
     // Obtener información del usuario
     let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
-    let fotoperfil = await conn.profilePictureUrl(who, 'image').catch(() => 'https://n.uguu.se/tdZvJaVR.jpg')
+    let fotoperfil = await conn.profilePictureUrl(who, 'image').catch(() => 'https://files.catbox.moe/b96pce.jpg')
 
     // Obtener nacionalidad
     let api = await axios.get(`https://deliriussapi-oficial.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`)
@@ -106,7 +106,7 @@ var handler = async function (m, conn, db) {
                 title: "Texto del bot", 
                 body: 'FnBot-MD', 
                 previewType: "PHOTO", 
-                thumbnailUrl: "https://n.uguu.se/tdZvJaVR.jpg", 
+                thumbnailUrl: "https://files.catbox.moe/b96pce.jpg", 
                 sourceUrl: "", 
                 mediaType: 1, 
                 renderLargerThumbnail: false 
