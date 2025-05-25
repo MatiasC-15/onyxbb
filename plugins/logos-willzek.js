@@ -16,7 +16,7 @@ const modelos = {
 };
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
-    if (!text) return conn.reply(m.chat, `*❗ Ingresa un texto* *Ejemplo:* ${usedPrefix + command} GokuBlack`, m);
+    if (!text) return conn.reply(m.chat, `*❗ Ingresa un texto* *Ejemplo:* ${usedPrefix + command} FnBot-MD`, m);
 
     m.reply('⏳ Creando tu logo, espera...');
 
