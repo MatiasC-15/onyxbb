@@ -1,18 +1,19 @@
-const handler = async (m, { conn, command }) => {
-  try {
-    // FnBot
-    let res = await fetch('https://api.fgmods.xyz/api/nsfw-nime/pussy?apikey=fg_ZIKajBcu');
-    let json = await res.json();
-    if (!json.result) throw 'Sin resultado de la API';
-    // FnBot
-    await conn.sendFile(m.chat, json.result, 'pussy.jpg', `🔞 ${command}`, m);
-  } catch (e) {
-    await m.reply('❌ Error, la API no responde o hay límite de peticiones.');
-  }
-};
+import fetch from 'node-fetch'
 
-handler.help = ['pussy'];
-handler.tags = ['nsfw'];
-handler.command = ['pussy'];
+let handler = async (m, { conn, usedPrefix, command }) => {
+   await m.react('🕓')
+   let res = await fetch('https://api.waifu.pics/nsfw/neko')
+   if (!res.ok) return m.react('❌')
+   let json = await res.json()
+   if (!json.url) return m.react('❌')
+   await conn.sendFile(m.chat, json.url, 'xneko.png', '*RANDOM NEKO*', m)
+   await m.react('✅')
+}
 
-export default handler;
+handler.help = ['xneko']
+handler.tags = ['nsfw']
+handler.command = ['xneko']
+
+handler.nsfw = true
+
+export default handler
