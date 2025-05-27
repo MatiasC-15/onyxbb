@@ -1,12 +1,13 @@
 import fetch from 'node-fetch'
-let handler = async (m, { conn, command }) => {
+let handler = async (m, { conn }) => {
   try {
-    let res = await fetch('https://api.dorratz.com/v2/pix-ai?prompt=anime+alya')
-    let json = await res.json()
-    if (!json.status || !json.result) throw '❌ Sin resultado.'
-    await conn.sendFile(m.chat, json.result, 'alya.jpg', '✨', m)
-  } catch {
-    await m.reply('❌ Error, intenta de nuevo más tarde.')
+    let response = await fetch('https://api.dorratz.com/v2/pix-ai?prompt=anime+alya');
+    if (!response.ok) throw '❌ Error de conexión con la API.';
+    let json = await response.json();
+    if (!json.result || typeof json.result !== 'string') throw '❌ No se encontró imagen.';
+    await conn.sendFile(m.chat, json.result, 'alya.jpg', '✨', m);
+  } catch (e) {
+    await m.reply(typeof e === 'string' ? e : '❌ Error, intenta de nuevo más tarde.');
   }
 }
 handler.help = ['alya']
