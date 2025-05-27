@@ -2,6 +2,16 @@
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=900&color=36BCF7&center=true&width=500&lines=FNBOT-MD+by+Rayo-ofc;El+mejor+Bot+de+Free+Fire+y+WhatsApp;¡Disfruta+la+experiencia+premium!;Créditos+a+Rayo-ofc+y+Ricardo" alt="Typing SVG" />
 </p>
 
+---
+<p align="center">
+  <img src="https://files.catbox.moe/i9m71s.jpg" alt="FNBOT-MD" 
+width="130" height="130" alt="
+avaricia"/></a>
+</p>  
+
+---
+
+
 # 🚀 FNBOT-MD
 
 **FNBOT-MD** es el bot de WhatsApp más avanzado y completo, ideal para grupos, jugadores y comunidades de Free Fire.  
