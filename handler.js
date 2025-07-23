@@ -287,8 +287,8 @@ const gruposPermitidos = [
 
 /*const comandosPermitidos = ['serbot', 'bots', 'kick', 'code', 's', 'delsession', 'on', 'off', 'tutosub'];*/
 
-if (gruposPermitidos.includes(m.chat) &&!comandosPermitidos.includes(command)) {
-  return;
+/*if (gruposPermitidos.includes(m.chat) &&!comandosPermitidos.includes(command)) {
+  return;*/
 }
 
                 let fail = plugin.fail || global.dfail
