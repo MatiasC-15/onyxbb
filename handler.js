@@ -289,7 +289,7 @@ const gruposPermitidos = [
 
 /*if (gruposPermitidos.includes(m.chat) &&!comandosPermitidos.includes(command)) {
   return;*/
-}
+//}
 
                 let fail = plugin.fail || global.dfail
                let isAccept = plugin.command instanceof RegExp ? 
