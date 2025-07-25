@@ -165,7 +165,7 @@ console.log(chalk.bold.white(chalk.bgMagenta(`👑 CÓDIGO DE VINCULACIÓN 👑`
 conn.isInit = false;
 conn.well = false;
 
-// El resto del archivo sigue igual...
+// Rayo-ofc hizo el mejor bot ff dejando huellas
 //conn.logger.info(`🔵  H E C H O\n`)
 
 if (!opts['test']) {
