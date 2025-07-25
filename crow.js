@@ -45,12 +45,12 @@ let { say } = cfonts
 
 console.log(chalk.magentaBright('\nIniciando...'))
 
-say('HuTao', {
+say('FnBot-MD', {
   font: 'simple',
   align: 'left',
   gradient: ['green', 'white']
 })
-say('Made With CheirZ', {
+say('Developed by Ricardo', {
   font: 'console',
   align: 'center',
   colors: ['cyan', 'magenta', 'yellow']
