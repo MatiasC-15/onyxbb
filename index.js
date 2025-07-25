@@ -17,6 +17,7 @@ import { tmpdir } from 'os';
 import { format } from 'util';
 import boxen from 'boxen';
 import P from 'pino';
+import path, {join} from 'path'
 import { Low, JSONFile } from 'lowdb';
 import { makeWASocket, protoType, serialize } from './lib/simple.js';
 import { DisconnectReason, useMultiFileAuthState, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser , Browsers } from '@whiskeysockets/baileys';
