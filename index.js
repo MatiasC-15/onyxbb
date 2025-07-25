@@ -37,7 +37,6 @@ import readline, { createInterface } from 'readline'
 import NodeCache from 'node-cache'
 const { CONNECTING } = ws
 const { chain } = lodash
-
 global.sessions = 'Session/Fn';
 global.jadi = 'Session/SubBot';
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000;
