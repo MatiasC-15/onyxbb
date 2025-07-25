@@ -1,3 +1,6 @@
+const sessions = 'auth_info_multi';
+global.sessions = sessions;
+
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
 import './config.js'
 import {createRequire} from 'module'
@@ -55,7 +58,6 @@ global.prefix = new RegExp('^[/.$#!]')
 // global.opts['db'] = process.env['db']
 
 global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('media/database/database.json'))
-
 global.DATABASE = global.db 
 global.loadDatabase = async function loadDatabase() {
 if (global.db.READ) {
@@ -82,7 +84,7 @@ global.db.chain = chain(global.db.data)
 }
 loadDatabase()
 
-const { state, saveCreds } = await useMultiFileAuthState('./auth_info_multi')
+const { state, saveCreds } = await useMultiFileAuthState(`./${sessions}`)
 const msgRetryCounterMap = (MessageRetryMap) => { };
 const msgRetryCounterCache = new NodeCache()
 const {version} = await fetchLatestBaileysVersion();
@@ -101,13 +103,12 @@ let opcion
 if (methodCodeQR) {
 opcion = '1'
 }
-if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) {
+if (!methodCodeQR && !methodCode && !existsSync(`./${sessions}/creds.json`)) {
 do {
 opcion = await question(colores('Seleccione una opción:\n') + opcionQR('1. Con código QR\n') + opcionTexto('2. Con código de texto de 8 dígitos\n--> '))
-
 if (!/^[1-2]$/.test(opcion)) {
 console.log(chalk.bold.redBright(`🚩 No se permiten numeros que no sean 1 o 2, tampoco letras o símbolos especiales.`))
-}} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${sessions}/creds.json`))
+}} while (opcion !== '1' && opcion !== '2' || existsSync(`./${sessions}/creds.json`))
 } 
 
 console.info = () => {} 
@@ -137,7 +138,7 @@ version: [2, 3000, 1015901307],
 
 global.conn = makeWASocket(connectionOptions);
 
-if (!fs.existsSync(`./${sessions}/creds.json`)) {
+if (!existsSync(`./${sessions}/creds.json`)) {
 if (opcion === '2' || methodCode) {
 opcion = '2'
 if (!conn.authState.creds.registered) {
@@ -161,9 +162,10 @@ console.log(chalk.bold.white(chalk.bgMagenta(`👑 CÓDIGO DE VINCULACIÓN 👑`
 }, 3000)
 }}}
 }
-
 conn.isInit = false;
 conn.well = false;
+
+// El resto del archivo sigue igual...
 //conn.logger.info(`🔵  H E C H O\n`)
 
 if (!opts['test']) {
