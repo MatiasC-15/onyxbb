@@ -41,6 +41,11 @@ global.catalogo = fs.readFileSync('./storage/img/catalogo.png')
 global.miniurl = fs.readFileSync('./storage/img/miniurl.jpg')
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+global.vs = '1.0.0'
+global.languaje = 'Es'
+global.nameqr = 'Fn'
+global.sessions = 'Session/Fn'
+global.jadi = 'Session/SubBot'
 
 global.group = ''
 global.canal = ''
