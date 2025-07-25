@@ -1,5 +1,5 @@
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
-import './confih.js'
+import './config.js'
 // import './plugins/_allfake.js'
 import { setupMaster, fork } from 'cluster'
 //import { startSub } from './lib/subs.js';
