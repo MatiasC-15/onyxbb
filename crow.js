@@ -1,4 +1,4 @@
-const sessions = 'auth_info_multi';
+const sessions = 'sessions';
 global.sessions = sessions;
 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
