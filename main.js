@@ -133,7 +133,7 @@ let opcion
 if (methodCodeQR) {
 opcion = '1'
 }
-if (!methodCodeQR && !methodCode && !fs.existsSync(`./${authFile}/creds.json`)) {
+if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) {
 do {
 let lineM = '⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ 》'
 opcion = await question('🌱 Seleccione una opción :\n1. Conexión mediante código QR.\n2. onexión mediante código de 8 dígitos.\n---> ')
@@ -176,7 +176,7 @@ defaultQueryTimeoutMs: undefined,
 version: [2, 3000, 1023223821],
 }
 global.conn = makeWASocket(connectionOptions)
-if (!fs.existsSync(`./${authFile}/creds.json`)) {
+if (!fs.existsSync(`./${sessions}/creds.json`)) {
 if (opcion === '2' || methodCode) {
 opcion = '2'
 if (!conn.authState.creds.registered) {
