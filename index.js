@@ -150,7 +150,7 @@ const connectionOptions = {
   syncFullHistory: false,
   getMessage: async (key) => {
     try {
-      let jid = jidNormalizedUser (key.remoteJid);
+      let jid = jidNormalizedUser(key.remoteJid);
       let msg = await store.loadMessage(jid, key.id);
       return msg?.message || "";
     } catch (error) {
@@ -223,7 +223,7 @@ async function connectionUpdate(update) {
     }
   }
   if (connection === "open") {
-    const userJid = jidNormalizedUser (conn.user.id);
+    const userJid = jidNormalizedUser(conn.user.id);
     const userName = conn.user.name || conn.user.verifiedName || "Desconocido";
     console.log(chalk.green.bold(`
 ╭───────────────────╼
