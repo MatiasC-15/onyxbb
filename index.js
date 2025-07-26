@@ -150,7 +150,7 @@ const connectionOptions = {
   syncFullHistory: false,
   getMessage: async (key) => {
     try {
-      let jid = jidNormalizedUser(key.remoteJid);
+      let jid = jidNormalizedUser (key.remoteJid);
       let msg = await store.loadMessage(jid, key.id);
       return msg?.message || "";
     } catch (error) {
@@ -166,7 +166,7 @@ const connectionOptions = {
   maxIdleTimeMs: 60000,
 };
 
-globalThis.conn = makeWASocket(connectionOptions);
+globalThis.conn = makeWASSocket(connectionOptions);
 
 if (!fs.existsSync(`./${sessions}/creds.json`)) {
   if (opcion === '2' || methodCode) {
@@ -223,7 +223,7 @@ async function connectionUpdate(update) {
     }
   }
   if (connection === "open") {
-    const userJid = jidNormalizedUser(conn.user.id);
+    const userJid = jidNormalizedUser (conn.user.id);
     const userName = conn.user.name || conn.user.verifiedName || "Desconocido";
     console.log(chalk.green.bold(`
 ╭───────────────────╼
@@ -277,7 +277,7 @@ globalThis.reloadHandler = async function(restatConn) {
       globalThis.conn.ws.close();
     } catch { }
     conn.ev.removeAllListeners();
-    globalThis.conn = makeWASocket(connectionOptions, { chats: oldChats });
+    globalThis.conn = makeWASSocket(connectionOptions, { chats: oldChats });
     isInit = true;
   }
   if (!isInit) {
@@ -397,89 +397,4 @@ function purgeSession() {
   let prekey = [];
   let directorio = readdirSync(`./${sessions}`);
   let filesFolderPreKeys = directorio.filter(file => file.startsWith('pre-key-'));
-  prekey = [...prekey, ...filesFolderPreKeys];
-  filesFolderPreKeys.forEach(files => {
-    unlinkSync(`./${sessions}/${files}`);
-  });
-}
-
-function purgeSessionSB() {
-  try {
-    const listaDirectorios = readdirSync(`./${jadi}/`);
-    let SBprekey = [];
-    listaDirectorios.forEach(directorio => {
-      if (statSync(`./${jadi}/${directorio}`).isDirectory()) {
-        const DSBPreKeys = readdirSync(`./${jadi}/${directorio}`).filter(fileInDir => fileInDir.startsWith('pre-key-'));
-        SBprekey = [...SBprekey, ...DSBPreKeys];
-        DSBPreKeys.forEach(fileInDir => {
-          if (fileInDir !== 'creds.json') unlinkSync(`./${jadi}/${directorio}/${fileInDir}`);
-        });
-      }
-    });
-  } catch (err) {
-    // Handle error
-  }
-}
-
-function purgeOldFiles() {
-  const directories = [`./${sessions}/`, `./${jadi}/`];
-  directories.forEach(dir => {
-    readdirSync(dir, (err, files) => {
-      if (err) throw err;
-      files.forEach(file => {
-        if (file !== 'creds.json') {
-          const filePath = path.join(dir, file);
-          unlinkSync(filePath);
-        }
-      });
-    });
-  });
-}
-
-function redefineConsoleMethod(methodName, filterStrings) {
-  const originalConsoleMethod = console[methodName];
-  console[methodName] = function() {
-    const message = arguments[0];
-    if (typeof message === 'string' && filterStrings.some(filterString => message.includes(atob(filterString)))) {
-      arguments[0] = "";
-    }
-    originalConsoleMethod.apply(console, arguments);
-  };
-}
-
-setInterval(async () => {
-  if (stopped === 'close' || !conn || !conn.user) return;
-  await clearTmp();
-}, 1000 * 60 * 4);
-
-setInterval(async () => {
-  if (stopped === 'close' || !conn || !conn.user) return;
-  await purgeSession();
-}, 1000 * 60 * 10);
-
-setInterval(async () => {
-  if (stopped === 'close' || !conn || !conn.user) return;
-  await purgeSessionSB();
-}, 1000 * 60 * 10);
-
-setInterval(async () => {
-  if (stopped === 'close' || !conn || !conn.user) return;
-  await purgeOldFiles();
-}, 1000 * 60 * 10);
-
-_quickTest().catch(console.error);
-
-async function isValidPhoneNumber(number) {
-  try {
-    number = number.replace(/\s+/g, '');
-    if (number.startsWith('+521')) {
-      number = number.replace('+521', '+52');
-    } else if (number.startsWith('+52') && number[4] === '1') {
-      number = number.replace('+52 1', '+52');
-    }
-    const parsedNumber = phoneUtil.parseAndKeepRawInput(number);
-    return phoneUtil.isValidNumber(parsedNumber);
-  } catch (error) {
-    return false;
-  }
-}
+  prekey = [...
