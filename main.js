@@ -139,7 +139,7 @@ let lineM = '⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ 》'
 opcion = await question('🌱 Seleccione una opción :\n1. Conexión mediante código QR.\n2. onexión mediante código de 8 dígitos.\n---> ')
 if (!/^[1-2]$/.test(opcion)) {
 console.log('🌴 Por favor, seleccione solo 1 o 2.\n')
-}} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${authFile}/creds.json`))
+}} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${sessions}/creds.json`))
 }
 
 const filterStrings = [
