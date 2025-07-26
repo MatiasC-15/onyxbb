@@ -107,7 +107,7 @@ loadChatgptDB();
 
 
 global.jadi = global.sessions
-const {state, saveState, saveCreds} = await useMultiFileAuthState(global.authFile)
+const {state, saveState, saveCreds} = await useMultiFileAuthState(global.jadi)
 const msgRetryCounterMap = (MessageRetryMap) => { }
 const msgRetryCounterCache = new NodeCache()
 const {version} = await fetchLatestBaileysVersion()
