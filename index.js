@@ -15,7 +15,7 @@ const { say } = cfonts;
 const rl = createInterface(process.stdin, process.stdout);
 
 function verify() {
-  const dirs = ['tmp', 'Sesiones/Subbots', 'Sesiones/Principal'];
+  const dirs = ['tmp', 'Sesiones/Principal'];
   for (const dir of dirs) {
     if (typeof dir === 'string' && dir.trim() !== '') {
       if (!existsSync(dir)) {
@@ -28,15 +28,14 @@ function verify() {
 }
 verify();
 
-// Diseño para "Sasuke Bot"
-say('sᥲsᥙkᥱ ᑲ᥆𝗍', {
+say('Fn-ᑲ᥆𝗍', {
   font: 'block', // Estilo 'block' para un diseño fuerte
   align: 'center',
   colors: ['red', 'white'], // Colores que recuerdan al Sharingan
   background: 'black' // Fondo oscuro para resaltar el texto
 });
 
-say(`Developed By • sᥲsᥙkᥱ ᑲ᥆𝗍 mძ`, {
+say(`Developed By • Ricardo`, {
   font: 'console',
   align: 'center',
   colors: ['magenta']
