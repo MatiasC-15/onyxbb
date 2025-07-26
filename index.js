@@ -20,7 +20,7 @@ import P from 'pino';
 import pino from 'pino';
 import path, { join, dirname } from 'path';
 import { Boom } from '@hapi/boom';
-import { makeWASocket, protoType, serialize } from './lib/simple.js';
+import { makeWASSocket, protoType, serialize } from './lib/simple.js';
 import { Low, JSONFile } from 'lowdb';
 import { mongoDB, mongoDBV2 } from './lib/mongoDB.js';
 import store from './lib/store.js';
@@ -56,21 +56,17 @@ serialize();
 globalThis.__filename = function filename(pathURL = import.meta.url, rmPrefix = platform !== 'win32') {
   return rmPrefix ? /file:\/\/\//.test(pathURL) ? fileURLToPath(pathURL) : pathURL : pathToFileURL(pathURL).toString();
 };
-
 global.__dirname = function dirname(pathURL) {
   return path.dirname(globalThis.__filename(pathURL, true));
 };
-
 globalThis.__require = function require(dir = import.meta.url) {
   return createRequire(dir);
 };
 
-globalThis.timestamp = { start: new Date() };
-
+globalThis.timestamp = { start: new Date };
 const __dirname = globalThis.__dirname(import.meta.url);
 
 globalThis.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse());
-
 globalThis.prefix = new RegExp('^[#.!/]');
 
 globalThis.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('datos.json'));
@@ -97,7 +93,6 @@ globalThis.loadDatabase = async function loadDatabase() {
   };
   globalThis.db.chain = chain(globalThis.db.data);
 };
-
 loadDatabase();
 
 const { state, saveState, saveCreds } = await useMultiFileAuthState(globalThis.sessions);
@@ -117,13 +112,11 @@ const rl = readline.createInterface({ input: process.stdin, output: process.stdo
 const question = (texto) => new Promise((resolver) => rl.question(texto, resolver));
 
 let opcion;
-if (methodCodeQR) {
-  opcion = '1';
-}
+if (methodCodeQR) opcion = '1';
+
 if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) {
   do {
     opcion = await question(colors("Seleccione una opción:\n") + qrOption("1. Con código QR\n") + textOption("2. Con código de texto de 8 dígitos\n--> "));
-
     if (!/^[1-2]$/.test(opcion)) {
       console.log(chalk.bold.redBright(`No se permiten numeros que no sean 1 o 2, tampoco letras o símbolos especiales.`));
     }
@@ -131,16 +124,16 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) 
 }
 
 const filterStrings = [
-  "Q2xvc2luZyBzdGFsZSBvcGVu", // "Closing stable open"
-  "Q2xvc2luZyBvcGVuIHNlc3Npb24=", // "Closing open session"
-  "RmFpbGVkIHRvIGRlY3J5cHQ=", // "Failed to decrypt"
-  "U2Vzc2lvbiBlcnJvcg==", // "Session error"
-  "RXJyb3I6IEJhZCBNQUM=", // "Error: Bad MAC" 
-  "RGVjcnlwdGVkIG1lc3NhZ2U=" // "Decrypted message" 
+  "Q2xvc2luZyBzdGFsZSBvcGVu",
+  "Q2xvc2luZyBvcGVuIHNlc3Npb24=",
+  "RmFpbGVkIHRvIGRlY3J5cHQ=",
+  "U2Vzc2lvbiBlcnJvcg==",
+  "RXJyb3I6IEJhZCBNQUM=",
+  "RGVjcnlwdGVkIG1lc3NhZ2U="
 ];
 
-console.info = () => { };
-console.debug = () => { };
+console.info = () => {};
+console.debug = () => {};
 ['log', 'warn', 'error'].forEach(methodName => redefineConsoleMethod(methodName, filterStrings));
 
 const connectionOptions = {
@@ -157,7 +150,7 @@ const connectionOptions = {
   syncFullHistory: false,
   getMessage: async (key) => {
     try {
-      let jid = jidNormalizedUser (key.remoteJid);
+      let jid = jidNormalizedUser(key.remoteJid);
       let msg = await store.loadMessage(jid, key.id);
       return msg?.message || "";
     } catch (error) {
@@ -185,10 +178,8 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
       } else {
         do {
           phoneNumber = await question(chalk.bgBlack(chalk.bold.greenBright(`🐞 Por favor, Ingrese el número de WhatsApp.\n${chalk.bold.magentaBright('---> ')}`)));
-          phoneNumber = phoneNumber.replace(/\D/g, '');
-          if (!phoneNumber.startsWith('+')) {
-            phoneNumber = `+${phoneNumber}`;
-          }
+          phoneNumber = phoneNumber.replace(/\D/g,'');
+          if (!phoneNumber.startsWith('+')) phoneNumber = `+${phoneNumber}`;
         } while (!await isValidPhoneNumber(phoneNumber));
         rl.close();
         addNumber = phoneNumber.replace(/\D/g, '');
@@ -232,7 +223,7 @@ async function connectionUpdate(update) {
     }
   }
   if (connection === "open") {
-    const userJid = jidNormalizedUser (conn.user.id);
+    const userJid = jidNormalizedUser(conn.user.id);
     const userName = conn.user.name || conn.user.verifiedName || "Desconocido";
     console.log(chalk.green.bold(`
 ╭───────────────────╼
@@ -317,7 +308,7 @@ globalThis.reloadHandler = async function(restatConn) {
 setInterval(() => {
   console.log('[ ✿ ]  Reiniciando...');
   process.exit(0);
-}, 10800000); // 3hs
+}, 10800000);
 
 const pluginFolder = globalThis.__dirname(join(__dirname, './plugins/index'));
 const pluginFilter = (filename) => /\.js$/.test(filename);
@@ -396,4 +387,99 @@ async function _quickTest() {
 function clearTmp() {
   const tmpDir = join(__dirname, 'tmp');
   const filenames = readdirSync(tmpDir);
-  filenames.for
+  filenames.forEach(file => {
+    const filePath = join(tmpDir, file);
+    unlinkSync(filePath);
+  });
+}
+
+function purgeSession() {
+  let prekey = [];
+  let directorio = readdirSync(`./${sessions}`);
+  let filesFolderPreKeys = directorio.filter(file => file.startsWith('pre-key-'));
+  prekey = [...prekey, ...filesFolderPreKeys];
+  filesFolderPreKeys.forEach(files => {
+    unlinkSync(`./${sessions}/${files}`);
+  });
+}
+
+function purgeSessionSB() {
+  try {
+    const listaDirectorios = readdirSync(`./${jadi}/`);
+    let SBprekey = [];
+    listaDirectorios.forEach(directorio => {
+      if (statSync(`./${jadi}/${directorio}`).isDirectory()) {
+        const DSBPreKeys = readdirSync(`./${jadi}/${directorio}`).filter(fileInDir => fileInDir.startsWith('pre-key-'));
+        SBprekey = [...SBprekey, ...DSBPreKeys];
+        DSBPreKeys.forEach(fileInDir => {
+          if (fileInDir !== 'creds.json') unlinkSync(`./${jadi}/${directorio}/${fileInDir}`);
+        });
+      }
+    });
+  } catch (err) {
+    // Handle error
+  }
+}
+
+function purgeOldFiles() {
+  const directories = [`./${sessions}/`, `./${jadi}/`];
+  directories.forEach(dir => {
+    readdirSync(dir, (err, files) => {
+      if (err) throw err;
+      files.forEach(file => {
+        if (file !== 'creds.json') {
+          const filePath = path.join(dir, file);
+          unlinkSync(filePath);
+        }
+      });
+    });
+  });
+}
+
+function redefineConsoleMethod(methodName, filterStrings) {
+  const originalConsoleMethod = console[methodName];
+  console[methodName] = function() {
+    const message = arguments[0];
+    if (typeof message === 'string' && filterStrings.some(filterString => message.includes(atob(filterString)))) {
+      arguments[0] = "";
+    }
+    originalConsoleMethod.apply(console, arguments);
+  };
+}
+
+setInterval(async () => {
+  if (stopped === 'close' || !conn || !conn.user) return;
+  await clearTmp();
+}, 1000 * 60 * 4);
+
+setInterval(async () => {
+  if (stopped === 'close' || !conn || !conn.user) return;
+  await purgeSession();
+}, 1000 * 60 * 10);
+
+setInterval(async () => {
+  if (stopped === 'close' || !conn || !conn.user) return;
+  await purgeSessionSB();
+}, 1000 * 60 * 10);
+
+setInterval(async () => {
+  if (stopped === 'close' || !conn || !conn.user) return;
+  await purgeOldFiles();
+}, 1000 * 60 * 10);
+
+_quickTest().catch(console.error);
+
+async function isValidPhoneNumber(number) {
+  try {
+    number = number.replace(/\s+/g, '');
+    if (number.startsWith('+521')) {
+      number = number.replace('+521', '+52');
+    } else if (number.startsWith('+52') && number[4] === '1') {
+      number = number.replace('+52 1', '+52');
+    }
+    const parsedNumber = phoneUtil.parseAndKeepRawInput(number);
+    return phoneUtil.isValidNumber(parsedNumber);
+  } catch (error) {
+    return false;
+  }
+}
