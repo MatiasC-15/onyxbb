@@ -144,7 +144,6 @@ browser: opcion == '1' ? ['WaBot', 'Edge', '20.0.04'] : methodCodeQR ? ['WaBot',
 auth: {
 creds: state.creds,
 keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
-},
 markOnlineOnConnect: false, 
 generateHighQualityLinkPreview: true, 
 syncFullHistory: false,
