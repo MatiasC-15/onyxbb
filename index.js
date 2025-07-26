@@ -29,7 +29,7 @@ const { proto } = (await import('@whiskeysockets/baileys')).default
 import pkg from 'google-libphonenumber'
 const { PhoneNumberUtil } = pkg
 const phoneUtil = PhoneNumberUtil.getInstance()
-const { makeInMemoryStore, DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore } = await import('@whiskeysockets/baileys')
+const { DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser, Browsers } = await import('@whiskeysockets/baileys')
 import readline, { createInterface } from 'readline'
 import NodeCache from 'node-cache'
 const { CONNECTING } = ws
@@ -144,19 +144,20 @@ browser: opcion == '1' ? ['WaBot', 'Edge', '20.0.04'] : methodCodeQR ? ['WaBot',
 auth: {
 creds: state.creds,
 keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
+},
 markOnlineOnConnect: false, 
 generateHighQualityLinkPreview: true, 
 syncFullHistory: false,
 getMessage: async (key) => {
 try {
-let jid = jidNormalizedUser(clave.remoteJid)
-let msg = await store.loadMessage(jid, clave.id)
-return msg?.message || ""
-},
+let jid = jidNormalizedUser(key.remoteJid);
+let msg = await store.loadMessage(jid, key.id);
+return msg?.message || "";
+} catch (error) {
+return "";
 }},
 msgRetryCounterCache: msgRetryCounterCache || new Map(),
 userDevicesCache: userDevicesCache || new Map(),
-//msgRetryCounterMap,
 defaultQueryTimeoutMs: undefined,
 cachedGroupMetadata: (jid) => globalThis.conn.chats[jid] ?? {},
 version: version, 
@@ -250,7 +251,7 @@ console.log(chalk.bold.cyanBright(`\n🐞 Conectando el Bot con el servidor...`)
 await globalThis.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.timedOut) {
 console.log(chalk.bold.yellowBright(`\n🦋 Conexión agotada, reconectando el Bot...`))
-await globalThis.reloadHandler(true).catch(console.error) //process.send('reset')
+await globalThis.reloadHandler(true).catch(console.error)
 } else {
 console.log(chalk.bold.redBright(`\n🎍 Conexión cerrada, conectese nuevamente.`))
 }}
