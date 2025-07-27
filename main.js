@@ -86,12 +86,11 @@ global.authFile = `sessions`
     const question = (texto) => new Promise((resolver) => rl.question(texto, resolver))
 
     const connectionOptions = {
-        version,
-        logger: pino({ level: "fatal" }).child({ level: "fatal" }),
-        printQRInTerminal: false,
-        mobile: useMobile, 
-        browser: ['Mac OS', 'chrome', '121.0.6167.159'], 
-        auth: {
+logger: pino({ level: 'silent' }),
+printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
+mobile: MethodMobile, 
+browser: opcion == '1' ? ['WaBot', 'Edge', '20.0.04'] : methodCodeQR ? ['WaBot', 'Edge', '20.0.04'] : ["Ubuntu", "Opera", "20.0.04"],
+auth: {
          creds: state.creds,
          keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
       },
