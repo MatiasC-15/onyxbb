@@ -13,7 +13,7 @@ import chalk from 'chalk';
 import syntaxerror from 'syntax-error';
 import { tmpdir } from 'os';
 import { format } from 'util';
-import P from 'pino'; // Asegúrate de que esta línea esté presente
+import P from 'pino';
 import autopost from './plugins/tools-auto.js';
 import { Boom } from '@hapi/boom';
 import { makeWASocket, protoType, serialize } from './lib/simple.js';
@@ -131,13 +131,13 @@ let opcion;
 if (methodCodeQR) {
   opcion = '1';
 }
-if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) {
+if (!methodCodeQR && !methodCode && !fs.existsSync(`./${jadi}/creds.json`)) {
   do {
     opcion = await question('🌱 Seleccione una opción:\n1. Conexión mediante código QR.\n2. Conexión mediante código de 8 dígitos.\n---> ');
     if (!/^[1-2]$/.test(opcion)) {
       console.log(chalk.bold.redBright(`No se permiten números que no sean 1 o 2, tampoco letras o símbolos especiales.`));
     }
-  } while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${sessions}/creds.json`));
+  } while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${jadi}/creds.json`));
 }
 
 const filterStrings = [
@@ -154,13 +154,13 @@ console.debug = () => {};
 ['log', 'warn', 'error'].forEach(methodName => redefineConsoleMethod(methodName, filterStrings));
 
 const connectionOptions = {
-  logger: pino({ level: 'silent' }), // Asegúrate de que pino esté definido
+  logger: P({ level: 'silent' }),
   printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
   mobile: MethodMobile,
   browser: opcion == '1' ? ['WaBot', 'Edge', '20.0.04'] : methodCodeQR ? ['WaBot', 'Edge', '20.0.04'] : ["Ubuntu", "Opera", "20.0.04"],
   auth: {
     creds: state.creds,
-    keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
+    keys: makeCacheableSignalKeyStore(state.keys, P({ level: "fatal" }).child({ level: "fatal" })),
   },
   markOnlineOnConnect: true,
   generateHighQualityLinkPreview: true,
@@ -178,7 +178,7 @@ const connectionOptions = {
 
 globalThis.conn = makeWASocket(connectionOptions);
 
-if (!fs.existsSync(`./${sessions}/creds.json`)) {
+if (!fs.existsSync(`./${jadi}/creds.json`)) {
   if (opcion === '2' || methodCode) {
     opcion = '2';
     if (!conn.authState.creds.registered) {
@@ -219,6 +219,7 @@ if (!opts['test']) {
 }
 
 if (opts['server']) (await import('./server.js')).default(global.conn, PORT);
+
 function clearTmp() {
   const tmp = [join(__dirname, './tmp')];
   const filename = [];
@@ -229,6 +230,7 @@ function clearTmp() {
     return false;
   });
 }
+
 const dirToWatchccc = path.join(__dirname, './');
 function deleteCoreFiles(filePath) {
   const coreFilePattern = /^core\.\d+$/i;
@@ -243,6 +245,7 @@ function deleteCoreFiles(filePath) {
     });
   }
 }
+
 fs.watch(dirToWatchccc, (eventType, filename) => {
   if (eventType === 'rename') {
     const filePath = path.join(dirToWatchccc, filename);
@@ -254,10 +257,8 @@ fs.watch(dirToWatchccc, (eventType, filename) => {
   }
 });
 
-
-
 async function connectionUpdate(update) {
-  const {connection, lastDisconnect, isNewLogin} = update;
+  const { connection, lastDisconnect, isNewLogin } = update;
   global.stopped = connection;
   if (isNewLogin) conn.isInit = true;
   const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode;
@@ -266,47 +267,45 @@ async function connectionUpdate(update) {
     global.timestamp.connect = new Date;
   }
   if (global.db.data == null) loadDatabase();
-if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
-if (opcion == '1' || methodCodeQR) {
-    console.log(chalk.yellow('🌿 Escanea el código QR.'));
- }}
+  if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
+    if (opcion == '1' || methodCodeQR) {
+      console.log(chalk.yellow('🌿 Escanea el código QR.'));
+    }
+  }
   if (connection == 'open') {
-  autopost(conn)
+    autopost(conn);
     console.log(chalk.yellow('🌱 Conectado correctamente.'));
   }
-let reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
-if (reason == 405) {
-await fs.unlinkSync(Sesion + "/creds.json")
-console.log(chalk.bold.redBright(`🍁 Conexión replazada, Por favor espere un momento me voy a reiniciar...\nSi aparecen error vuelve a iniciar con : npm start`)) 
-process.send('reset')}
-if (connection === 'close') {
+  let reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
+  if (reason == 405) {
+    await fs.unlinkSync(jadi + "/creds.json");
+    console.log(chalk.bold.redBright(`🍁 Conexión reemplazada, Por favor espere un momento me voy a reiniciar...\nSi aparecen error vuelve a iniciar con : npm start`));
+    process.send('reset');
+  }
+  if (connection === 'close') {
     if (reason === DisconnectReason.badSession) {
-        conn.logger.error(`🌴 Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
-        //process.exit();
+      conn.logger.error(`🌴 Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
     } else if (reason === DisconnectReason.connectionClosed) {
-        conn.logger.warn(`🌾 Conexión cerrada, reconectando...`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.warn(`🌾 Conexión cerrada, reconectando...`);
+      await global.reloadHandler(true).catch(console.error);
     } else if (reason === DisconnectReason.connectionLost) {
-        conn.logger.warn(`🌿 Conexión perdida con el servidor, reconectando...`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.warn(`🌿 Conexión perdida con el servidor, reconectando...`);
+      await global.reloadHandler(true).catch(console.error);
     } else if (reason === DisconnectReason.connectionReplaced) {
-        conn.logger.error(`🍀 Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
-        //process.exit();
+      conn.logger.error(`🍀 Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
     } else if (reason === DisconnectReason.loggedOut) {
-        conn.logger.error(`🌳 Conexion cerrada, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
-        //process.exit();
+      conn.logger.error(`🌳 Conexion cerrada, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
     } else if (reason === DisconnectReason.restartRequired) {
-        conn.logger.info(`🍃 Reinicio necesario, reinicie el servidor si presenta algún problema.`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.info(`🍃 Reinicio necesario, reinicie el servidor si presenta algún problema.`);
+      await global.reloadHandler(true).catch(console.error);
     } else if (reason === DisconnectReason.timedOut) {
-        conn.logger.warn(`🌲 Tiempo de conexión agotado, reconectando...`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.warn(`🌲 Tiempo de conexión agotado, reconectando...`);
+      await global.reloadHandler(true).catch(console.error);
     } else {
-        conn.logger.warn(`🍄 Razón de desconexión desconocida. ${reason || ''}: ${connection || ''}`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.warn(`🍄 Razón de desconexión desconocida. ${reason || ''}: ${connection || ''}`);
+      await global.reloadHandler(true).catch(console.error);
     }
-}
-
+  }
 }
 
 process.on('uncaughtException', console.error);
@@ -315,9 +314,7 @@ let isInit = true;
 
 let handler = await import('./handler.js');
 global.reloadHandler = async function(restatConn) {
-
   try {
-
     const Handler = await import(`./handler.js?update=${Date.now()}`).catch(console.error);
     if (Object.keys(Handler || {}).length) handler = Handler;
   } catch (e) {
@@ -329,7 +326,7 @@ global.reloadHandler = async function(restatConn) {
       global.conn.ws.close();
     } catch { }
     conn.ev.removeAllListeners();
-    global.conn = makeWASocket(connectionOptions, {chats: oldChats});
+    global.conn = makeWASocket(connectionOptions, { chats: oldChats });
     isInit = true;
   }
   if (!isInit) {
@@ -342,9 +339,8 @@ global.reloadHandler = async function(restatConn) {
     conn.ev.off('creds.update', conn.credsUpdate);
   }
 
-
-  conn.welcome = '*👋 Hola @user*\n\n                *W E L C O M E*\n⫹⫺ Grupo: @group\n\n⫹⫺ *Descripción:*\n@desc'
-  conn.bye = '👋 Byee @user\n\n                *G O O D B Y E*'
+  conn.welcome = '*👋 Hola @user*\n\n                *W E L C O M E*\n⫹⫺ Grupo: @group\n\n⫹⫺ *Descripción:*\n@desc';
+  conn.bye = '👋 Byee @user\n\n                *G O O D B Y E*';
   conn.spromote = '*[ ℹ️ ] @user Fue promovido a administrador.*';
   conn.sdemote = '*[ ℹ️ ] @user Fue degradado de administrador.*';
   conn.sDesc = '*[ ℹ️ ] La descripción del grupo ha sido modificada.*';
