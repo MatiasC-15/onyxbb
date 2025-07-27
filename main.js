@@ -14,6 +14,7 @@ import syntaxerror from 'syntax-error'
 import { tmpdir } from 'os'
 import { format } from 'util'
 import P from 'pino'
+import autopost from './plugins/tools-auto.js'
 import pino from 'pino'
 import Pino from 'pino'
 import { Boom } from '@hapi/boom'
@@ -267,6 +268,7 @@ if (opcion == '1' || methodCodeQR) {
     console.log(chalk.yellow('🌿 Escanea el código QR.'));
  }}
   if (connection == 'open') {
+  autopost(conn)
     console.log(chalk.yellow('🌱 Conectado correctamente.'));
   }
 let reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
@@ -310,9 +312,9 @@ let isInit = true;
 
 let handler = await import('./handler.js');
 global.reloadHandler = async function(restatConn) {
-  
+
   try {
-   
+
     const Handler = await import(`./handler.js?update=${Date.now()}`).catch(console.error);
     if (Object.keys(Handler || {}).length) handler = Handler;
   } catch (e) {
@@ -452,7 +454,7 @@ arguments[0] = ""
 }
 originalConsoleMethod.apply(console, arguments)
 }}
-    
+
 async function isValidPhoneNumber(number) {
 try {
 number = number.replace(/\s+/g, '')
@@ -478,8 +480,7 @@ _quickTest().catch(console.error);
 
 setInterval(() => {
   if (process.send) {
-    console.log('â° Reinicio automÃ¡tico ejecutado cada 45 minutos');
+    console.log('â�° Reinicio automÃ¡tico ejecutado cada 5 horas');
     process.send('reset');
   }
 }, 1000 * 60 * 45);
-
