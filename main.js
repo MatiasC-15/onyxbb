@@ -156,20 +156,20 @@ console.debug = () => {};
 );
 
 const connectionOptions = {
-  logger: pino({ level: 'silent' }),
-  printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
-  mobile: MethodMobile,
-  browser: opcion == '1' ? ['WaBot', 'Edge', '20.0.04'] : methodCodeQR ? ['WaBot', 'Edge', '20.0.04'] : ["Ubuntu", "Opera", "20.0.04"],
-  auth: {
-    creds: state.creds,
-    keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
-  },
-  markOnlineOnConnect: false,
-  generateHighQualityLinkPreview: true,
-  syncFullHistory: false,
-  getMessage: async (key) => {
-    try {
-      let jid = jidNormalizedUser (key.remoteJid);
+logger: pino({ level: 'silent' }),
+printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
+mobile: MethodMobile, 
+browser: opcion == '1' ? Browsers.macOS("Desktop") : methodCodeQR ? Browsers.macOS("Desktop") : Browsers.macOS("Chrome"), 
+auth: {
+creds: state.creds,
+keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
+},
+markOnlineOnConnect: false, 
+generateHighQualityLinkPreview: true, 
+syncFullHistory: false,
+getMessage: async (key) => {
+try {
+let jid = jidNormalizedUser (key.remoteJid);
       let msg = await store.loadMessage(jid, key.id);
       return msg?.message || "";
     } catch (error) {
