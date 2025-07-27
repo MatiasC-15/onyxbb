@@ -50,7 +50,7 @@ global.wm = '✿◟Onyx Bot◞✿'
 global.author = '© mᥲძᥱ ᥕі𝗍һ ᑲᥡ Matias'
 global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ Matias'
 global.textbot = 'Onyx, mᥲძᥱ ᥕі𝗍һ ᑲᥡ Matias'
-global.etiqueta = 'Matias''
+global.etiqueta = 'Matias'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
