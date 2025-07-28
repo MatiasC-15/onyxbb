@@ -13,7 +13,6 @@ const handler = async (m, { conn, text, command }) => {
     externalAdReply: {
       title: packname,
       body: "🎿 Video Downloader",
-      thumbnail: icons,
       sourceUrl: redes,
       mediaType: 1,
       renderLargerThumbnail: false
