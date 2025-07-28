@@ -22,7 +22,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     await m.react(loading);
 
     const ytURL = encodeURIComponent(args[0]);
-    const apiURL = `https://dark-core-api.vercel.app/api/download/YTMP3?key=api&url=${ytURL}`;
+            const api = await fetch(`https://api.stellarwa.xyz/dow/ytmp3?url=${url}&apikey=proyectsV2`).then(r => r.json());
 
     const { data } = await axios.get(apiURL);
 
