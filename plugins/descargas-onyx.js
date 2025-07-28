@@ -15,7 +15,7 @@ let handler = async (m, { conn, args, command, text }) => {
 
     if (type === 'audio') {
       try {
-        let resDC = await fetch(`https://dark-core-api.vercel.app/api/download/YTMP3?key=api&url=${text}`);
+        let resDC = await fetch(`https://api.sylphy.xyz/download/ytmp3?url=${ytURL}&apikey=sylph-30fc019324`);
         let jsonDC = await resDC.json();
 
         if (!jsonDC?.result?.url) throw new Error('Fallo dark-core');
@@ -29,7 +29,7 @@ let handler = async (m, { conn, args, command, text }) => {
         ago = jsonDC.result.published || 'Desconocido';
         videoId = jsonDC.result.id || '';
       } catch (e1) {
-        let resSyl = await fetch(`https://api.sylphy.xyz/download/ytmp3?url=${text}&apikey=sylph-30fc019324`);
+        let resSyl = await fetch(`https://api.sylphy.xyz/download/ytmp3?url=${ytURL}&apikey=sylph-30fc019324`);
         let jsonSyl = await resSyl.json();
 
         if (!jsonSyl?.result?.url) throw new Error('Fallo ytmp3');
