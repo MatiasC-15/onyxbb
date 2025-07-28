@@ -11,7 +11,7 @@ Aquí tienes la lista de comandos
 ╭┈ ↷
 │ᰔᩚ Cliente » @${userId.split('@')[0]}
 │❀ Modo » Publico
-│ⴵ Activado » ${uptime}
+│ⴵ Activada » ${uptime}
 │✰ Usuarios » ${totalreg}
 ╰─────────────────
 
@@ -48,9 +48,9 @@ Aquí tienes la lista de comandos
         title: botname,
         body: textbot,
         mediaType: 1,
-        mediaUrl: './src/catalogo1.jpg',
-        sourceUrl: './src/catalogo1.jpg',
-        thumbnail: await (await fetch('./src/catalogo1.jpg')).buffer(),
+        mediaUrl: 'https://d.uguu.se/qjKkhXvJ.jpg',
+        sourceUrl: 'https://d.uguu.se/qjKkhXvJ.jpg',
+        thumbnail: await (await fetch('https://d.uguu.se/qjKkhXvJ.jpg')).buffer(),
         showAdAttribution: false,
         containsAutoReply: true,
         renderLargerThumbnail: true
