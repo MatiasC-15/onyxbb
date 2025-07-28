@@ -22,7 +22,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     await m.react(loading);
 
     const ytURL = encodeURIComponent(args[0]);
-            const api = await fetch(`https://api.stellarwa.xyz/dow/ytmp3=${url}&apikey=proyectsV2`;
+    const apiURL = `https://api.stellarwa.xyz/dow/ytmp3=${ytURL}&apikey=proyectsV2`;
 
     const { data } = await axios.get(apiURL);
 
