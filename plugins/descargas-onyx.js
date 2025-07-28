@@ -88,9 +88,9 @@ let handler = async (m, { conn, args, command, text }) => {
   m.react("✅");
 };
 
-handler.command = ['ytmp4doc', 'ytmp3doc', 'ytmp3'];
+handler.command = ['ytmp4doc'];
 handler.register = true;
 handler.tags = ['downloader'];
-handler.help = ['ytmp4doc <link>', 'ytmp3doc <link>', 'ytmp3 <link>'];
+handler.help = ['ytmp4doc <link>'];
 
 export default handler;
