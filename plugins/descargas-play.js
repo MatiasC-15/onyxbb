@@ -22,7 +22,7 @@ const handler = async (m, { conn, text, command }) => {
 
   if (!text) {
     return conn.reply(m.chat,
-      `Hola ${name}* Necesito que me digas el nombre de un video o me pegues el link de YouTube 💕\n\n✨ *Ejemplos:*\n.play Shinzou wo Sasageyo\n.play https://youtu.be/xxx`,
+      `Hola Necesito que me digas el nombre de un video o me pegues el link de YouTube 💕\n\n✨ *Ejemplos:*\n.play Shinzou wo Sasageyo\n.play https://youtu.be/xxx`,
       m, { contextInfo });
   }
 
@@ -78,7 +78,7 @@ const handler = async (m, { conn, text, command }) => {
 
       await conn.sendMessage(m.chat, {
         video: { url: res.result.download },
-        caption: `🎥 *Listo ${name}-chan!* Aquí está tu video~`,
+        caption: `🎥 *Listo Aquí está tu video`,
         fileName: res.result.title + ".mp4",
         mimetype: "video/mp4"
       }, {
