@@ -76,7 +76,7 @@ const handler = async (m, { conn, text, command }) => {
 
       await conn.sendMessage(m.chat, {
         video: { url: res.result.download },
-        caption: `🎥 *Listo Aquí está tu video`,
+        caption: `🎥 *Listo Aquí está tu video*`,
         fileName: res.result.title + ".mp4",
         mimetype: "video/mp4"
       }, {
