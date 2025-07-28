@@ -11,7 +11,7 @@ Aquí tienes la lista de comandos
 ╭┈ ↷
 │ᰔᩚ Cliente » @${userId.split('@')[0]}
 │❀ Modo » Publico
-│ⴵ Activada » ${uptime}
+│ⴵ Activado » ${uptime}
 │✰ Usuarios » ${totalreg}
 ╰─────────────────
 
